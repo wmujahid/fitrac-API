@@ -59,14 +59,8 @@ public class BudgetService {
         }
     }
 
-//    public Budget deleteBudget(Long id, Budget budgetObject){
-//        Optional<Budget> budget = budgetRepository.findById(id);
-//        if (budget.isPresent()) {
-//            budget.re
-//            return budget;
-//        } else {
-//            throw new InformationNotFoundException("category with id " + id + " not found");
-//        }
+//    public void deleteBudget(Long id){
+//        budgetRepository.deleteBudgetbyId(id);
 //    }
 
     public Optional<Budget> deleteBudget(Long id) {

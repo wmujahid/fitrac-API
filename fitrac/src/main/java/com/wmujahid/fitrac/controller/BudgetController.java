@@ -43,15 +43,9 @@ public class BudgetController {
         return new ResponseEntity<>(updateBudget, HttpStatus.OK);
     }
 
-
-//    @DeleteMapping ("/update/{id}")
-//    public ResponseEntity<Budget> deleteBudget(@PathVariable(
-//            value = "id") Long id, @RequestBody Budget budgetObject){
-//        Budget deleteBudget = budgetService.deleteBudget(id, budgetObject);
-//        return new ResponseEntity<>(deleteBudget, HttpStatus.OK);
-//    }
 //    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<Budget> deleteBudget(@PathVariable(value = "id") Long id) {
+//    public ResponseEntity<?> deleteBudget(@PathVariable(value = "id") Long id) {
+//        budgetService.deleteBudget(id);
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
 
