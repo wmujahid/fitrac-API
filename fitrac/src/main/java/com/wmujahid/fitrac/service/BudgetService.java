@@ -1,5 +1,6 @@
 package com.wmujahid.fitrac.service;
 
+import com.wmujahid.fitrac.exception.InformationNotFoundException;
 import com.wmujahid.fitrac.model.Budget;
 import com.wmujahid.fitrac.repository.BudgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,9 @@ public class BudgetService {
         return budgetRepository.findAll();
     }
 
-    public Optional<Budget> findBudgetById(Long id){
-        return budgetRepository.findBudgetById(id);
+    public Budget findBudgetById(Long id) {
+        return budgetRepository.findBudgetById(id)
+                .orElseThrow(() -> new InformationNotFoundException("budget with id " + id + " not found"));
     }
 
     public Budget updateBudget(Budget budget){
