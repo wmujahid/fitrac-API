@@ -37,14 +37,26 @@ public class BudgetController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Budget> updateBudget(@RequestBody Budget budget){
-        Budget updateBudget = budgetService.updateBudget(budget);
+    public ResponseEntity<Budget> updateBudget(@PathVariable(
+            value = "id") Long id, @RequestBody Budget budgetObject){
+        Budget updateBudget = budgetService.updateBudget(id, budgetObject);
         return new ResponseEntity<>(updateBudget, HttpStatus.OK);
     }
 
+
+//    @DeleteMapping ("/update/{id}")
+//    public ResponseEntity<Budget> deleteBudget(@PathVariable(
+//            value = "id") Long id, @RequestBody Budget budgetObject){
+//        Budget deleteBudget = budgetService.deleteBudget(id, budgetObject);
+//        return new ResponseEntity<>(deleteBudget, HttpStatus.OK);
+//    }
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<Budget> deleteBudget(@PathVariable(value = "id") Long id) {
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBudget(@PathVariable(value = "id") Long id) {
-        budgetService.findBudgetById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public Optional<Budget> deleteBudget(@PathVariable(value = "id") Long id) {
+        return budgetService.deleteBudget(id);
     }
 }

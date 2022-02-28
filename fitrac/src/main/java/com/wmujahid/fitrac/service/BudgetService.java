@@ -1,5 +1,6 @@
 package com.wmujahid.fitrac.service;
 
+import com.wmujahid.fitrac.exception.InformationExistsException;
 import com.wmujahid.fitrac.exception.InformationNotFoundException;
 import com.wmujahid.fitrac.model.Budget;
 import com.wmujahid.fitrac.repository.BudgetRepository;
@@ -21,12 +22,16 @@ public class BudgetService {
         this.budgetRepository = budgetRepository;
     }
 
-    public Budget createBudget(Budget budget) {
+    public Budget createBudget(Budget budgetObject) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        budget.setCreationDate(dtf.format(now));
-        System.out.println(budget.getCreationDate());
-        return budgetRepository.save(budget);
+        budgetObject.setCreationDate(dtf.format(now));
+        Budget budget = budgetRepository.findByName(budgetObject.getName());
+        if(budget != null){
+            throw new InformationExistsException("budget with name " + budget.getName() + " already exists");
+        } else {
+            return budgetRepository.save(budgetObject);
+        }
     }
 
     public List<Budget> findAllBudgets(){
@@ -38,11 +43,39 @@ public class BudgetService {
                 .orElseThrow(() -> new InformationNotFoundException("budget with id " + id + " not found"));
     }
 
-    public Budget updateBudget(Budget budget){
-        return budgetRepository.save(budget);
+    public Budget updateBudget(Long id, Budget budgetObject){
+        Optional<Budget> budget = budgetRepository.findById(id);
+        if (budget.isPresent()) {
+            if (budgetObject.getName().equals(budget.get().getName())) {
+                throw new InformationExistsException("Budget " + budget.get().getName() + " is already exists");
+            } else {
+                Budget updateBudget = budgetRepository.findById(id).get();
+                updateBudget.setName(budgetObject.getName());
+                updateBudget.setDescription(budgetObject.getDescription());
+                return budgetRepository.save(updateBudget);
+            }
+        } else {
+            throw new InformationNotFoundException("Budget with id " + id + " not found");
+        }
     }
 
-    public void deleteBudget(Long id){
-        budgetRepository.deleteBudgetById(id);
+//    public Budget deleteBudget(Long id, Budget budgetObject){
+//        Optional<Budget> budget = budgetRepository.findById(id);
+//        if (budget.isPresent()) {
+//            budget.re
+//            return budget;
+//        } else {
+//            throw new InformationNotFoundException("category with id " + id + " not found");
+//        }
+//    }
+
+    public Optional<Budget> deleteBudget(Long id) {
+        Optional<Budget> budget = budgetRepository.findById(id);
+        if (budget.isPresent()) {
+            budgetRepository.deleteById(id);
+            return budget;
+        } else {
+            throw new InformationNotFoundException("category with id " + id + " not found");
+        }
     }
 }
