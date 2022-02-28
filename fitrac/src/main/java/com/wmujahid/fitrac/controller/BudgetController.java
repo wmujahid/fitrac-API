@@ -32,7 +32,7 @@ public class BudgetController {
 
     @PostMapping("/create")
     public ResponseEntity<Budget> createBudget(@RequestBody Budget budget) {
-        Budget newBudget = budgetService.addBudget(budget);
+        Budget newBudget = budgetService.createBudget(budget);
         return new ResponseEntity<>(newBudget, HttpStatus.CREATED);
     }
 

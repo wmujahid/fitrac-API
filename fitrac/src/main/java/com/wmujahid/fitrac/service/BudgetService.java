@@ -21,10 +21,11 @@ public class BudgetService {
         this.budgetRepository = budgetRepository;
     }
 
-    public Budget addBudget(Budget budget) {
+    public Budget createBudget(Budget budget) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         budget.setCreationDate(dtf.format(now));
+        System.out.println(budget.getCreationDate());
         return budgetRepository.save(budget);
     }
 
