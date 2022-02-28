@@ -18,17 +18,13 @@ public class Budget implements Serializable {
     private String description;
 
     @Column(nullable = false, updatable = false)
-    private String startDate;
+    private String creationDate;
 
-    @Column
-    private String endDate;
-
-    public Budget(Long id, String name, String description, String startDate, String endDate) {
+    public Budget(Long id, String name, String description, String creationDate) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.creationDate = creationDate;
     }
 
     public Budget() {
@@ -58,14 +54,21 @@ public class Budget implements Serializable {
         this.description = description;
     }
 
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
     @Override
     public String toString() {
         return "Budget{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
+                ", creationDate='" + creationDate + '\'' +
                 '}';
     }
 }
